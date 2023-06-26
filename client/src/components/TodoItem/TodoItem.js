@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDeleteTodo } from '../../hooks/useDeleteTodo';
 import { useUpdateTodo } from '../../hooks/useUpdateTodo';
 import { useToggleTodo } from '../../hooks/useToggleTodo';
@@ -16,10 +16,14 @@ export default function TodoItem({ todo }) {
   const { updateTodoData } = useUpdateTodo();
   const { toggleTodoStatus } = useToggleTodo();
 
+  const editButtonClicked = useRef(false);
+
   const handleUpdate = async () => {
     await updateTodoData(_id, editedContent);
-
-    setIsEditing(false);
+    if (!editButtonClicked.current) {
+      setIsEditing(false);
+    }
+    editButtonClicked.current = false;
   };
 
   console.log(isEditing);
@@ -46,6 +50,7 @@ export default function TodoItem({ todo }) {
           <button
             className="edit-button"
             onClick={() => {
+              editButtonClicked.current = true;
               setIsEditing(true);
             }}
           >
