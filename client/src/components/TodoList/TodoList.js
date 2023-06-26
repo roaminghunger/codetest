@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoItem from '../TodoItem/TodoItem';
 import PropTypes from 'prop-types';
+import '../../styles/TodoList.scss';
 
 export default function TodoList({ todos }) {
   return (
