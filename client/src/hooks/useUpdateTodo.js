@@ -13,6 +13,5 @@ export function useUpdateTodo() {
       console.error(err);
     }
   };
-  console.log('here');
   return { updateTodoData };
 }

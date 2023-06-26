@@ -27,7 +27,6 @@ export default function TodoItem({ todo }) {
     editButtonClicked.current = false;
   };
 
-  console.log(isEditing);
   return (
     <li className="TodoItem">
       <input
