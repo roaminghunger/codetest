@@ -1,0 +1,87 @@
+@import './variables';
+@import './mixins';
+
+.TodoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  animation: fade-in 0.3s ease;
+
+  input[type='checkbox'] {
+    margin-right: 1rem;
+  }
+
+  .content-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    p {
+      flex: 1;
+      margin: 0;
+      font-size: $default-font-size;
+      color: $rhdark-grey;
+
+      @include transition-color;
+
+      &.strikethrough {
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+        color: darken($rhgrey, 50%); // adjust the percentage to get the desired darkness
+      }
+    }
+
+    .edit-button {
+      @include edit-button-style;
+    }
+  }
+
+  .edit-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    input[type='text'] {
+      flex: 1;
+      padding: $small-padding;
+      border: none;
+      border-radius: $default-border-radius;
+      background-color: $rhlight-grey;
+
+      @include box-shadow-transition;
+
+      &:focus {
+        outline: none;
+        box-shadow: $focus-shadow;
+      }
+    }
+
+    .edit-button {
+      @include edit-button-style($rhblue, $rhwhite);
+    }
+  }
+
+  .delete-button {
+    background-color: $rhred;
+    border: none;
+    padding: $small-padding $medium-padding;
+    color: $rhwhite;
+    cursor: pointer;
+    border-radius: $default-border-radius;
+
+    @include transition-bg($rhred);
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

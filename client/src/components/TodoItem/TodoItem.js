@@ -5,6 +5,7 @@ import { useToggleTodo } from '../../hooks/useToggleTodo';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import '../../styles/TodoItem.scss';
 
 export default function TodoItem({ todo }) {
   const { _id, data, done } = todo;
