@@ -22,8 +22,11 @@ export default function AddTodoForm() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="What needs to be done?"
+        aria-label="Input field to add new todo"
       />
-      <button type="submit">Add Todo</button>
+      <button type="submit" aria-label="Add new todo to the list">
+        Add Todo
+      </button>
     </form>
   );
 }

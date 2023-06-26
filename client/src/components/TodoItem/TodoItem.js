@@ -30,7 +30,13 @@ export default function TodoItem({ todo }) {
   console.log(isEditing);
   return (
     <li className="TodoItem">
-      <input type="checkbox" checked={done} disabled={isEditing} onChange={() => toggleTodoStatus(_id)} />
+      <input
+        type="checkbox"
+        checked={done}
+        disabled={isEditing}
+        onChange={() => toggleTodoStatus(_id)}
+        aria-label={done ? 'Mark this task as incomplete' : 'Mark this task as complete'}
+      />
 
       {isEditing ? (
         <div className="edit-container">
