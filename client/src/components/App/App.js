@@ -5,7 +5,7 @@ import '../../styles/App.scss';
 function App() {
   return (
     <div className="App">
-      <TodoContainer />
+      <TodoContainer data-testid="todo-container" />
     </div>
   );
 }
