@@ -1,0 +1,34 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.AddTodoForm {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  input[type='text'] {
+    flex: 1;
+    padding: $small-padding;
+    border: none;
+    border-radius: $default-border-radius;
+    background-color: $rhlight-grey;
+
+    @include box-shadow-transition;
+
+    &:focus {
+      outline: none;
+      box-shadow: $focus-shadow;
+    }
+  }
+
+  button[type='submit'] {
+    padding: $small-padding $medium-padding;
+    border: none;
+    border-radius: $default-border-radius;
+    background-color: $rhblue;
+    color: $rhwhite;
+    cursor: pointer;
+
+    @include transition-bg($rhblue);
+  }
+}

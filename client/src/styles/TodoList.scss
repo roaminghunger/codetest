@@ -1,0 +1,15 @@
+@import './variables';
+@import './mixins';
+
+.TodoList {
+  list-style-type: none;
+  padding: 0;
+
+  li:not(:last-child) {
+    margin-bottom: $medium-margin;
+  }
+
+  @include for-mobile {
+    padding-top: 1rem;
+  }
+}
