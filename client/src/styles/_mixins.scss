@@ -1,0 +1,59 @@
+@mixin transition-bg($color) {
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($color, 10%);
+  }
+}
+
+@mixin responsive-padding($default: 2rem, $responsive: 1rem) {
+  padding: $default;
+
+  @media (max-width: 480px) {
+    padding: $responsive;
+  }
+}
+
+@mixin focus {
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px $rhblue-opacity;
+  }
+}
+
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+@mixin box-shadow-transition {
+  transition: box-shadow 0.3s ease;
+}
+
+@mixin transition-color {
+  transition: color 0.3s ease;
+}
+
+@mixin for-mobile {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin edit-button-style($bg-color: transparent, $text-color: $rhblue) {
+  @include button-reset;
+  color: $text-color;
+  cursor: pointer;
+  padding: $small-padding;
+  background-color: $bg-color;
+
+  @include transition-color;
+  @include transition-bg($bg-color);
+
+  &:hover {
+    color: darken($text-color, 20%);
+    background-color: darken($bg-color, 10%);
+  }
+}
