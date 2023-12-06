@@ -1,22 +1,33 @@
+"use client"
+import { useState } from 'react';
 import { format } from 'date-fns'
 import { FaTrashAlt } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function Home() {
+  const [creatingNew, setCreatingNew] = useState(false)
+  const [editingToDo, setEditingToDo] = useState(false)
+  const [newToDo, setNewToDo] = useState('')
+
   const today = () => format(new Date(), 'MM/dd/YYY').toString()
   const toDos = [
     {
-      name: 'Walk dog', completed: false, date_completed: null
+      id: 1, description: 'Walk dog', completed: false, date_completed: null
     },
     {
-      name: 'Do Laundry', completed: false, date_completed: null
+      id: 2, description: 'Do Laundry', completed: false, date_completed: null
     },
     {
-      name: 'Pack Suitcase', completed: true, date_completed: new Date(2023, 12, 4)
+      id: 3, description: 'Pack Suitcase', completed: true, date_completed: new Date(2023, 12, 4)
     }
   ]
 
   const updateTodo = () => console.log('CLICKED')
+  const editTodoDescription = () => console.log('CLICKED')
+
   const destroyTodo = () => console.log('CLICKED')
+  const handleSubmitToDo = () => console.log('CLICKED')
 
 
   return (
@@ -30,22 +41,53 @@ export default function Home() {
           {/* to-do list */}
           <div>
           <ul className="space-y-2">
-            {toDos.map(todoItem => (
-              <li className="flex">
-                <input type="checkbox" className="form-checkbox h-4 w-4 accent-pink-600" onClick={updateTodo()} checked={todoItem.completed}/>
+            {toDos.map(toDoItem => (
+              <li key={toDoItem.id} className="flex">
+                <input type="checkbox" className="form-checkbox h-4 w-4 accent-pink-600" onChange={() => updateTodo()} checked={toDoItem.completed}/>
                 <span className="flex ml-2 text-gray-800">
-                  <p>{todoItem.name}</p>
+                  <p>{toDoItem.description}</p><FaPencilAlt className="ml-2 hover:cursor-pointer" onClick={() => editTodo()} />
                 </span>
                 <span className="flex space-x-4 ml-auto">
-                  {todoItem.completed &&
-                    <p>Completed: {format(todoItem.date_completed, 'MM/dd/YYY')}</p>
+                  {toDoItem.completed &&
+                    <p>Completed: {format(toDoItem.date_completed, 'MM/dd/YYY')}</p>
                   }
-                  <FaTrashAlt onClick={destroyTodo()} />
+                  <FaTrashAlt className="hover:cursor-pointer" onClick={() => destroyTodo()} />
                 </span>
             </li>
             ))}
-        </ul>
+          </ul>
+          {!creatingNew ? 
+            <div>    
+              <div className="flex mt-8 items-center justify-center">
+                <p>Add New</p>
+              </div>
+              <span className="flex items-center justify-center">
+                <FaPlusCircle className="hover:cursor-pointer" onClick={() => setCreatingNew(!creatingNew)}/>
+              </span>
+            </div>
+            :
+            <div>    
+              <div className="flex mt-8 items-center justify-center">
+                <p>Add New To Do</p>
+              </div>
+              <form onSubmit={() => handleSubmitToDo()}>
+                <input 
+                  type="text"
+                  name="description"
+                  id="description"
+                  className="my-3 text-gray-900 sm:text-sm rounded-lg block w-full p-1"
+                  value={newToDo}
+                  onChange={(e) => setNewToDo(e.target.value)}
+                /> 
+                <button 
+                  className="border-2 border-pink-800 p-1.5 w-full rounded-lg border-gray-200 bg-pink-600 hover:bg-purple-400" 
+                  type="submit">
+                  Save
+                </button>
+              </form>   
+            </div>
 
+          }
           </div>
         </div>
       </div>
