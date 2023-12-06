@@ -8,6 +8,8 @@ import { FaPencilAlt } from "react-icons/fa";
 export default function Home() {
   const [creatingNew, setCreatingNew] = useState(false)
   const [editingToDo, setEditingToDo] = useState(false)
+  const [editableIndex, setEditableIndex] = useState(null)
+  const [editedDescription, setEditedDescription] = useState('')
   const [newToDo, setNewToDo] = useState('')
 
   const today = () => format(new Date(), 'MM/dd/YYY').toString()
@@ -23,11 +25,27 @@ export default function Home() {
     }
   ]
 
-  const updateTodo = () => console.log('CLICKED')
-  const editTodoDescription = () => console.log('CLICKED')
+  const updateTodo = (index) => console.log(index)
+  
+  const editTodoDescription = (index) => {
+    setEditableIndex(index);
+    setEditedDescription(toDos[index].description);
+  }
+
+  const saveTodo = (index) => {
+    // call to api
+    // saveEditTodo(index, { description: editedDescription });
+    setEditableIndex(null);
+  }
 
   const destroyTodo = () => console.log('CLICKED')
-  const handleSubmitToDo = () => console.log('CLICKED')
+  
+  const handleSubmitToDo = (event) => {
+    event.preventDefault()
+    console.log(event)
+    setCreatingNew(!creatingNew)
+    setNewToDo('')
+  }
 
 
   return (
@@ -41,11 +59,27 @@ export default function Home() {
           {/* to-do list */}
           <div>
           <ul className="space-y-2">
-            {toDos.map(toDoItem => (
+            {toDos.map((toDoItem, index) => (
               <li key={toDoItem.id} className="flex">
-                <input type="checkbox" className="form-checkbox h-4 w-4 accent-pink-600" onChange={() => updateTodo()} checked={toDoItem.completed}/>
+                <input type="checkbox" className="form-checkbox h-4 w-4 accent-pink-600" onChange={() => updateTodo(index)} checked={toDoItem.completed}/>
                 <span className="flex ml-2 text-gray-800">
-                  <p>{toDoItem.description}</p><FaPencilAlt className="ml-2 hover:cursor-pointer" onClick={() => editTodo()} />
+                    {editableIndex === index ? (
+                    <input
+                      type="text"
+                      value={editedDescription}
+                      onChange={(e) => setEditedDescription(e.target.value)}
+                      onBlur={() => saveTodo(index)}
+                      autoFocus
+                    />
+                  ) : (
+                    <>
+                      <p>{toDoItem.description}</p>
+                      <FaPencilAlt
+                        className="ml-2 hover:cursor-pointer"
+                        onClick={() => editTodoDescription(index)}
+                      />
+                    </>
+                  )}
                 </span>
                 <span className="flex space-x-4 ml-auto">
                   {toDoItem.completed &&
@@ -70,7 +104,7 @@ export default function Home() {
               <div className="flex mt-8 items-center justify-center">
                 <p>Add New To Do</p>
               </div>
-              <form onSubmit={() => handleSubmitToDo()}>
+              <form onSubmit={(event) => handleSubmitToDo(event)}>
                 <input 
                   type="text"
                   name="description"
